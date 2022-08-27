@@ -1,0 +1,2 @@
+all:
+	love $(shell pwd)
