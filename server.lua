@@ -1,10 +1,12 @@
+#!/usr/local/bin/lua
 -- Server
-socket = require("inc.socket")
+Socket = require("socket")
 require("inc.lib_general")
 local board = require("inc.board")
+local copas = require("copas")
 
 
--- local server = assert(socket.bind(" * ", 8081))
+-- local server = assert(socket.bind("localhost", 8080))
 -- local ip, port = server:getsockname()
 local r = {
   n = 0, 
@@ -12,20 +14,23 @@ local r = {
   c2 = "Gómez"
 }
 
-board.load("001.txt")
+-- board.load("001.txt")
 
-os.exit()
-
-while true do
-  local client = server:accept()
-  client:settimeout(10)
-  local line, err = client:receive()
-  if not err then 
-    while true do
-      r.n = r.n + 1
-      client:send(serialize(r) .. "\n") 
+function handler(msg)
+  msg = copas.wrap(msg)
+  while true do
+    local data = msg:receive()
+    if data == "quit" then
+      break
     end
-    wait(1000)
+	if data == nil then data = "*" end
+    msg:send(data)
   end
 end
-client:close()
+
+
+-- os.exit()
+local server, err = Socket.bind("127.0.0.1", 8081)
+copas.addserver(server, handler)
+print("Server on...")
+copas.loop()
