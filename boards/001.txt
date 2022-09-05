@@ -1,0 +1,6 @@
+board:
+  name: Test board 1
+sq: 1, 1, 10, 10
+  name: Test square 1
+  mov: 1
+  light: 1
