@@ -19,7 +19,7 @@ function love.load()
 end
 
 local function troquel_token()
-	love.graphics.circle("fill", r.x+35, r.y+35, 35)
+	love.graphics.circle("fill",         r.x+35, r.y+35, 35)
 end
 
 function love.draw()
@@ -34,10 +34,10 @@ end
 
 function love.update(dt)
 	tick.update(dt)
-	if love.keyboard.isDown("right") then 	r.dx = 1 	end
-	if love.keyboard.isDown("left") then  	r.dx = -1	end
-	if love.keyboard.isDown("up") then		r.dy = -1	end
-	if love.keyboard.isDown("down") then	r.dy = 1	end
+	if love.keyboard.isDown("right") then r.dx = 1 	end
+	if love.keyboard.isDown("left")  then r.dx = -1	end
+	if love.keyboard.isDown("up")    then r.dy = -1	end
+	if love.keyboard.isDown("down")  then r.dy = 1	end
 	r.x = r.x + r.dx * 20 * dt
 	r.y = r.y + r.dy * 20 * dt
 end

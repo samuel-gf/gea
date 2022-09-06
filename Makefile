@@ -1,5 +1,5 @@
 server:
-	lua server.lua
+	@lua server.lua
 
 
 play:
