@@ -8,9 +8,9 @@ function serialize(a)
 end
 
 
-function wait(millisecond)
-  socket.sleep(1)
-end
+--function wait(millisecond)
+--  socket.sleep(millisecond)
+--end
 
 
 function print_r(t, level)
@@ -48,5 +48,5 @@ function pairsByKeys (t, f)
 end
 
 function trim(s)
-  return (s:gsub("^%s * (. - )%s * $", "%1"))
+  return (s:gsub("^%s*(.-)%s*$", "%1"))
 end

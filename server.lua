@@ -1,36 +1,27 @@
 #!/usr/local/bin/lua
 -- Server
-Socket = require("socket")
+local Socket = require("socket")
 require("inc.lib_general")
-local board = require("inc.board")
-local copas = require("copas")
+local Board = require("inc.board")
+local Copas = require("copas")
 
 
--- local server = assert(socket.bind("localhost", 8080))
--- local ip, port = server:getsockname()
-local r = {
-  n = 0, 
-  c1 = "Samuel", 
-  c2 = "Gómez"
-}
+Board.load("001.txt")
 
--- board.load("001.txt")
-
-function handler(msg)
-  msg = copas.wrap(msg)
+function client_handler(socket)
+  print("Cliente conectado")
+  local n = 0
   while true do
-    local data = msg:receive()
-    if data == "quit" then
-      break
-    end
-	if data == nil then data = "*" end
-    msg:send(data)
+    n = n + 1
+	print("Envio ", n)
+    Copas.send(socket, n.."\n")
+	Socket.sleep(1)
   end
 end
 
 
 -- os.exit()
 local server, err = Socket.bind("127.0.0.1", 8081)
-copas.addserver(server, handler)
+Copas.addserver(server, client_handler)
 print("Server on...")
-copas.loop()
+Copas.loop()

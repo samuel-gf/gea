@@ -1,21 +1,19 @@
 #!/usr/local/bin/lua
-local host, port = "127.0.0.1", 8081
+
+
+-- Client
 local Socket = require("socket")
-local copas = require("copas")
+local Copas = require("copas")
 
-local s = Socket.connect(host, port)
-s:settimeout(0)
+local socket = Socket.connect("127.0.0.1", 8081)
+socket:settimeout(0)
 
-copas.addthread(function()
+Copas.addthread(function()
+	print("Conectado al servidor")
 	while true do
-		print("Recibiendo...")
-		local resp = copas.receive(s, 6)
-		print("received:", resp or "nil")
-		if resp and resp:sub(1,4) == "quit" then
-		  s:close()
-		  break
-		end
+		local line = Copas.receive(socket, "*l") or "nil"
+		print("Recibido: " .. line)
 	end
 end)
 
-copas.loop()
+Copas.loop()
